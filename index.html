@@ -1,11 +1,176 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Alerta de Inundaciones - Medellín</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e6f7ff;
+      color: #003366;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #005580;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #003366;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    main {
+      padding: 20px;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    .alerta {
+      background-color: #ffcccc;
+      border: 2px solid red;
+      padding: 15px;
+    }
+
+    /* Carrusel */
+    .carousel-container {
+      position: relative;
+      max-width: 600px;
+      margin: auto;
+    }
+    .carousel-slide {
+      display: none;
+    }
+    .carousel-slide img {
+      width: 100%;
+      border-radius: 5px;
+    }
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      transition: 0.3s ease;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+    }
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+    .prev:hover, .next:hover {
+      background-color: rgba(0,0,0,0.8);
+    }
+
+    /* Formularios y Servicios */
+    .formulario, .servicios {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input[type="submit"] {
+      background-color: #005580;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+    input[type="submit"]:hover {
+      background-color: #003366;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    ul li {
+      margin-bottom: 15px;
+    }
+    footer {
+      text-align: center;
+      background-color: #005580;
+      color: white;
+      padding: 10px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Hola mundo</h1>
-</body>
-</html>
+
+<header>
+  <h1>Sistema de Alerta de Inundaciones</h1>
+  <h2>Medellín, Colombia</h2>
+</header>
+
+<nav>
+  <a href="#alertas">Alertas</a>
+  <a href="#imagenes">Imágenes</a>
+  <a href="#formulario">Reportar</a>
+  <a href="#servicios">Ayuda</a>
+  <a href="https://siata.gov.co/siata_nuevo/" target="_blank">SIATA</a>
+</nav>
+
+<main>
+
+  <section id="alertas" class="alerta">
+    <h3>⚠️ Alerta Activa</h3>
+    <p>Barrios en riesgo: La Iguaná, Bello Oriente, Manrique Central, San Javier, Belén Rincón.</p>
+    <p>Fuente: <a href="https://siata.gov.co/siata_nuevo/" target="_blank">SIATA Medellín</a></p>
+  </section>
+
+  <section id="imagenes">
+    <h3>📷 Inundaciones Recientes</h3>
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="..." class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+    </div>
+  </div>
+</div>
+
+  <section id="formulario" class="formulario">
+    <h3>📝 Reportar Inundación</h3>
+    <form action="#" method="POST">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required>
+
+      <label for="email">Correo electrónico:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="ubicacion">Ubicación del incidente:</label>
+      <input type="text" id="ubicacion" name="ubicacion" required>
+
+      <label for="descripcion">Descripción:</label>
+      <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+
+      <input type="submit" value="Enviar Reporte">
+    </form>
+  </section>
+
+  <section id="servicios" class="ser
