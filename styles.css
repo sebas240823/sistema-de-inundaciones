@@ -1,73 +1,90 @@
 /* Estilos generales */
+
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f9;
-  margin: 0;
-  padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
 }
 
 h2 {
-  color: #004085;
-  font-size: 2rem;
-  margin-bottom: 20px;
+    color: #004085;
+    font-size: 2rem;
+    margin-bottom: 20px;
 }
 
 ul {
-  list-style-type: none;
-  padding-left: 0;
+    list-style-type: none;
+    padding-left: 0;
 }
 
 ul li {
-  font-size: 1.1rem;
-  color: #333;
+    font-size: 1.1rem;
+    color: #333;
 }
 
+
 /* Navbar */
+
 .navbar {
-  background-color: #004085;
+    background-color: #004085;
 }
 
 .navbar-brand {
-  color: white;
-  font-size: 1.5rem;
+    color: white;
+    font-size: 1.5rem;
 }
 
 .navbar-brand img {
-  margin-right: 10px;
-  width: 40px;
-  height: 40px;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
 }
 
 .navbar-nav .nav-link {
-  color: white;
-  font-size: 1.1rem;
-  padding: 10px 20px;
+    color: white;
+    font-size: 1.1rem;
+    padding: 10px 20px;
 }
 
 .navbar-nav .nav-link:hover {
-  background-color: #0056b3;
+    background-color: #0056b3;
 }
 
 .navbar-nav .nav-item.active .nav-link {
-  background-color: #0062cc;
-  border-radius: 5px;
+    background-color: #0062cc;
+    border-radius: 5px;
 }
 
 section {
-  padding: 40px 0;
-  margin: 0 auto;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+    padding: 40px 0;
+    margin: 0 auto;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .navbar-nav .nav-link {
-    font-size: 1rem;
-  }
 
-  h2 {
-    font-size: 1.6rem;
-  }
+/* Responsive */
+
+@media (max-width: 768px) {
+    .navbar-nav .nav-link {
+        font-size: 1rem;
+    }
+    h2 {
+        font-size: 1.6rem;
+    }
+}
+
+.nav-content {
+    display: none;
+    background-color: #004080;
+    color: white;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
