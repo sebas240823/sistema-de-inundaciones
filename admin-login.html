@@ -2,6 +2,12 @@
 <html lang="es">
 
 <head>
+    <link rel="icon" href="imagenes/ChatGPT Image 15 jul 2025, 02_12_06 p.m..png" type="image/x-icon" />
+    <!-- También puede ser PNG -->
+    <link rel="icon" href="imagenes/ChatGPT Image 15 jul 2025, 02_12_06 p.m..png" type="image/png" />
+</head>
+
+<head>
     <meta charset="UTF-8">
     <title>Login Administrador - Aqua Alert</title>
     <style>
@@ -73,11 +79,17 @@
         function verificarLogin() {
             const usuario = document.getElementById("usuario").value.trim();
             const contrasena = document.getElementById("contrasena").value;
-
             const userCorrecto = "sebastiancorrecano@gmail.com";
             const passCorrecto = "sebas279";
-
+            const userCorrectoA = "joserdejesusramirez@gmail.com";
+            const passCorrectoD = "joser12";
             if (usuario === userCorrecto && contrasena === passCorrecto) {
+                localStorage.setItem("admin_logueado", "true");
+                window.location.href = "admin.html";
+            } else {
+                document.getElementById("error").style.display = "block";
+            }
+            if (usuario === userCorrectoA && contrasena === passCorrectoD) {
                 localStorage.setItem("admin_logueado", "true");
                 window.location.href = "admin.html";
             } else {
