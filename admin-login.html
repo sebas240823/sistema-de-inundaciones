@@ -84,13 +84,13 @@
             const userCorrectoA = "joserdejesusramirez@gmail.com";
             const passCorrectoD = "joser12";
             if (usuario === userCorrecto && contrasena === passCorrecto) {
-                localStorage.setItem("admin_logueado", "true");
+                sessionStorage.setItem("admin_logueado", "true");
                 window.location.href = "admin.html";
             } else {
                 document.getElementById("error").style.display = "block";
             }
             if (usuario === userCorrectoA && contrasena === passCorrectoD) {
-                localStorage.setItem("admin_logueado", "true");
+                sessionStorage.setItem("admin_logueado", "true");
                 window.location.href = "admin.html";
             } else {
                 document.getElementById("error").style.display = "block";

@@ -99,12 +99,12 @@
 
     <!-- Protección de acceso -->
     <script>
-        if (localStorage.getItem("admin_logueado") !== "true") {
+        if (sessionStorage.getItem("admin_logueado") !== "true") {
             window.location.href = "admin-login.html";
         }
 
         function cerrarSesion() {
-            localStorage.removeItem("admin_logueado");
+            sessionStorage.removeItem("admin_logueado");
             window.location.href = "admin-login.html";
         }
     </script>
