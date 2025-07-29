@@ -332,16 +332,52 @@
                     }
                 });
             }
-        </script>
-        <script>
+
+            // NUEVA FUNCIONALIDAD: Envío de reportes al panel de administración
             (function() {
                 const form = document.getElementById('formularioReporte');
 
                 form.addEventListener('submit', function(event) {
-                    // Si el formulario no es válido, evita enviar
-                    if (!form.checkValidity()) {
-                        event.preventDefault();
-                        event.stopPropagation();
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    // Si el formulario es válido
+                    if (form.checkValidity()) {
+                        // Recopilar datos del formulario
+                        const formData = new FormData(form);
+
+                        // Crear objeto del reporte
+                        const nuevoReporte = {
+                            id: Date.now(), // ID único
+                            nombre: formData.get('nombre'),
+                            identificacion: formData.get('Identificacion'),
+                            email: formData.get('email'),
+                            ubicacion: formData.get('ubicacion'),
+                            descripcion: formData.get('descripcion'),
+                            fecha: new Date().toLocaleDateString('es-CO'),
+                            hora: new Date().toLocaleTimeString('es-CO', {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            }),
+                            estado: 'Pendiente',
+                            prioridad: 'Medio'
+                        };
+
+                        // Obtener reportes existentes del localStorage
+                        let reportes = JSON.parse(localStorage.getItem('reportes_aqua_alert')) || [];
+
+                        // Agregar el nuevo reporte
+                        reportes.push(nuevoReporte);
+
+                        // Guardar en localStorage
+                        localStorage.setItem('reportes_aqua_alert', JSON.stringify(reportes));
+
+                        // Mostrar mensaje de éxito
+                        alert('✅ ¡Reporte enviado exitosamente!\n\nTu reporte ha sido recibido y será procesado por nuestro equipo de emergencias.\n\nNúmero de reporte: ' + nuevoReporte.id);
+
+                        // Limpiar el formulario
+                        form.reset();
+                        form.classList.remove('was-validated');
                     }
 
                     // Activa mensajes de Bootstrap
@@ -353,7 +389,7 @@
 
 </body>
 
-<h6> style="text-align: center;"> AQUA ALERT</h6>
+<h6 style="text-align: center;"> AQUA ALERT</h6>
 
 
 </html>
