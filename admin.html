@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="icon" href="imagenes/ChatGPT Image 15 jul 2025, 02_12_06 p.m..png" type="image/x-icon" />
+    <link rel="icon" href="imagenes/ChatGPT Image 15 jul 2025, 02_12_06 p.m..png" type="image/png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Aqua Alert</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6f7ff;
+            color: #003366;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background-color: #005580;
+            color: white;
+            padding: 25px 0;
+            text-align: center;
+        }
+        
+        main {
+            padding: 40px 20px;
+        }
+        
+        .admin-panel {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-section {
+            display: none;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .btn-back {
+            margin-bottom: 20px;
+        }
+        
+        .report-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #f8f9fa;
+        }
+        
+        .alert-form {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .zone-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #f8f9fa;
+        }
+        
+        .risk-level-high {
+            border-left: 5px solid #dc3545;
+        }
+        
+        .risk-level-medium {
+            border-left: 5px solid #ffc107;
+        }
+        
+        .risk-level-low {
+            border-left: 5px solid #28a745;
+        }
+        
+        footer {
+            text-align: center;
+            background-color: #005580;
+            color: white;
+            padding: 12px;
+            margin-top: 40px;
+        }
+        
+        .no-reports {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        
+        .no-reports i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Encabezado -->
+    <header>
+        <h1 style="margin: 0;">🔧 Panel de Administración</h1>
+        <h4 style="margin-top: 10px;">AQUA ALERT - Medellín</h4>
+    </header>
+
+    <!-- Panel principal -->
+    <main class="container">
+        <!-- Panel Principal -->
+        <div id="main-panel" class="admin-panel">
+            <h3 class="text-center mb-4" style="color: #005580;">🛠️ Opciones del Administrador</h3>
+            <div class="d-grid gap-3">
+                <button onclick="mostrarSeccion('reportes')" class="btn btn-primary btn-lg w-100">
+                    <i class="fas fa-file-alt me-2"></i>📄 Ver Reportes Recibidos
+                </button>
+                <button onclick="mostrarSeccion('nueva-alerta')" class="btn btn-warning btn-lg w-100 text-white">
+                    <i class="fas fa-exclamation-triangle me-2"></i>⚠️ Registrar Nueva Alerta
+                </button>
+                <button onclick="mostrarSeccion('zonas-riesgo')" class="btn btn-info btn-lg w-100 text-white">
+                    <i class="fas fa-map-marked-alt me-2"></i>🗺️ Gestionar Zonas de Riesgo
+                </button>
+                <button onclick="cerrarSesion()" class="btn btn-danger btn-lg w-100">
+                    <i class="fas fa-sign-out-alt me-2"></i>🔐 Cerrar Sesión
+                </button>
+            </div>
+        </div>
+
+        <!-- Sección Reportes -->
+        <div id="reportes" class="content-section">
+            <button onclick="volverAlMenu()" class="btn btn-secondary btn-back">
+                <i class="fas fa-arrow-left"></i> Volver al Menú
+            </button>
+            <h3 style="color: #005580;">📄 Reportes Recibidos</h3>
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Buscar reportes..." onkeyup="filtrarReportes(this.value)">
+            </div>
+            <div class="mb-3">
+                <button onclick="cargarReportes()" class="btn btn-success">
+                    <i class="fas fa-sync-alt"></i> Actualizar Reportes
+                </button>
+                <button onclick="limpiarReportes()" class="btn btn-warning ms-2">
+                    <i class="fas fa-trash"></i> Limpiar Todos
+                </button>
+            </div>
+
+            <div id="lista-reportes">
+                <!-- Los reportes se cargarán dinámicamente aquí -->
+            </div>
+        </div>
+
+        <!-- Sección Nueva Alerta -->
+        <div id="nueva-alerta" class="content-section">
+            <button onclick="volverAlMenu()" class="btn btn-secondary btn-back">
+                <i class="fas fa-arrow-left"></i> Volver al Menú
+            </button>
+            <h3 style="color: #005580;">⚠️ Registrar Nueva Alerta</h3>
+
+            <div class="alert-form">
+                <form onsubmit="registrarAlerta(event)">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Tipo de Alerta</label>
+                            <select class="form-select" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="deslizamiento">Deslizamiento de Tierra</option>
+                                <option value="inundacion">Inundación</option>
+                                <option value="incendio">Incendio Forestal</option>
+                                <option value="sismo">Actividad Sísmica</option>
+                                <option value="vendaval">Vendaval</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nivel de Riesgo</label>
+                            <select class="form-select" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="bajo">Bajo</option>
+                                <option value="medio">Medio</option>
+                                <option value="alto">Alto</option>
+                                <option value="critico">Crítico</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Ubicación</label>
+                            <input type="text" class="form-control" placeholder="Ej: Barrio Popular, Sector 3" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Fecha y Hora</label>
+                            <input type="datetime-local" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Descripción del Evento</label>
+                        <textarea class="form-control" rows="4" placeholder="Describe detalladamente la situación..." required></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Personas Afectadas (estimado)</label>
+                            <input type="number" class="form-control" min="0">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Equipo de Respuesta</label>
+                            <select class="form-select">
+                                <option value="">Asignar más tarde</option>
+                                <option value="equipo1">Equipo de Rescate A</option>
+                                <option value="equipo2">Equipo de Rescate B</option>
+                                <option value="bomberos">Bomberos</option>
+                                <option value="policia">Policía</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-warning btn-lg">
+                            <i class="fas fa-save"></i> Registrar Alerta
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sección Zonas de Riesgo -->
+        <div id="zonas-riesgo" class="content-section">
+            <button onclick="volverAlMenu()" class="btn btn-secondary btn-back">
+                <i class="fas fa-arrow-left"></i> Volver al Menú
+            </button>
+            <h3 style="color: #005580;">🗺️ Gestionar Zonas de Riesgo</h3>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <input type="text" class="form-control me-2" placeholder="Buscar zona..." onkeyup="filtrarZonas(this.value)">
+                <button class="btn btn-success" onclick="mostrarFormularioZona()">
+                    <i class="fas fa-plus"></i> Nueva Zona
+                </button>
+            </div>
+
+            <div id="lista-zonas">
+                <div class="zone-card risk-level-high" data-zona="la-montana">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="text-danger">🚨 Barrio La Montaña</h5>
+                            <p><strong>Tipo de Riesgo:</strong> Deslizamiento de Tierra</p>
+                            <p><strong>Nivel:</strong> Alto</p>
+                            <p><strong>Población Afectada:</strong> ~1,200 personas</p>
+                            <p><strong>Última Actualización:</strong> 20/07/2025</p>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-danger mb-2">Alto Riesgo</span>
+                            <div>
+                                <button class="btn btn-sm btn-primary me-1">Editar</button>
+                                <button class="btn btn-sm btn-info me-1">Ver Mapa</button>
+                                <button class="btn btn-sm btn-warning">Alertar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="zone-card risk-level-medium" data-zona="san-jose">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="text-warning">⚠️ Quebrada San José</h5>
+                            <p><strong>Tipo de Riesgo:</strong> Inundación</p>
+                            <p><strong>Nivel:</strong> Medio</p>
+                            <p><strong>Población Afectada:</strong> ~800 personas</p>
+                            <p><strong>Última Actualización:</strong> 18/07/2025</p>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-warning mb-2">Riesgo Medio</span>
+                            <div>
+                                <button class="btn btn-sm btn-primary me-1">Editar</button>
+                                <button class="btn btn-sm btn-info me-1">Ver Mapa</button>
+                                <button class="btn btn-sm btn-warning">Alertar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="zone-card risk-level-low" data-zona="el-volador">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="text-success">✅ Cerro El Volador</h5>
+                            <p><strong>Tipo de Riesgo:</strong> Incendio Forestal</p>
+                            <p><strong>Nivel:</strong> Bajo</p>
+                            <p><strong>Población Afectada:</strong> ~300 personas</p>
+                            <p><strong>Última Actualización:</strong> 15/07/2025</p>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-success mb-2">Riesgo Bajo</span>
+                            <div>
+                                <button class="btn btn-sm btn-primary me-1">Editar</button>
+                                <button class="btn btn-sm btn-info me-1">Ver Mapa</button>
+                                <button class="btn btn-sm btn-secondary">Monitorear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+        &copy; 2025 Aqua Alert - Todos los derechos reservados.
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Protección de acceso - mantener funcionalidad original
+        // if (sessionStorage.getItem("admin_logueado") !== "true") {
+        //     window.location.href = "admin-login.html";
+        // }
+
+        function mostrarSeccion(seccion) {
+            // Ocultar panel principal
+            document.getElementById('main-panel').style.display = 'none';
+
+            // Ocultar todas las secciones
+            const secciones = document.querySelectorAll('.content-section');
+            secciones.forEach(s => s.classList.remove('active'));
+
+            // Mostrar la sección seleccionada
+            document.getElementById(seccion).classList.add('active');
+
+            // Si es la sección de reportes, cargar los reportes
+            if (seccion === 'reportes') {
+                cargarReportes();
+            }
+        }
+
+        function volverAlMenu() {
+            // Mostrar panel principal
+            document.getElementById('main-panel').style.display = 'block';
+
+            // Ocultar todas las secciones
+            const secciones = document.querySelectorAll('.content-section');
+            secciones.forEach(s => s.classList.remove('active'));
+        }
+
+        function cerrarSesion() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                sessionStorage.removeItem("admin_logueado");
+                window.location.href = "admin-login.html";
+            }
+        }
+
+        // NUEVA FUNCIONALIDAD: Cargar reportes desde localStorage
+        function cargarReportes() {
+            const reportes = JSON.parse(localStorage.getItem('reportes_aqua_alert')) || [];
+            const listaReportes = document.getElementById('lista-reportes');
+
+            if (reportes.length === 0) {
+                listaReportes.innerHTML = `
+                    <div class="no-reports">
+                        <i class="fas fa-inbox"></i>
+                        <h4>No hay reportes disponibles</h4>
+                        <p>Los reportes enviados desde el formulario principal aparecerán aquí.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            reportes.forEach((reporte, index) => {
+                const badgeClass = getBadgeClass(reporte.prioridad);
+                const iconoEstado = reporte.estado === 'Resuelto' ? '✅' : '🚨';
+
+                html += `
+                    <div class="report-card" data-id="${reporte.id}">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h5 class="text-primary">${iconoEstado} Reporte de Inundación #${reporte.id}</h5>
+                                <p><strong>Ubicación:</strong> ${reporte.ubicacion}</p>
+                                <p><strong>Reportado por:</strong> ${reporte.nombre}</p>
+                                <p><strong>Identificación:</strong> ${reporte.identificacion}</p>
+                                <p><strong>Email:</strong> ${reporte.email}</p>
+                                <p><strong>Fecha:</strong> ${reporte.fecha} - ${reporte.hora}</p>
+                                <p><strong>Descripción:</strong> ${reporte.descripcion}</p>
+                            </div>
+                            <span class="badge ${badgeClass}">${reporte.estado}</span>
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-sm btn-primary me-2" onclick="verDetalles(${reporte.id})">Ver Detalles</button>
+                            <button class="btn btn-sm btn-success me-2" onclick="marcarAtendido(${reporte.id})">Marcar Atendido</button>
+                            <button class="btn btn-sm btn-warning me-2" onclick="asignarEquipo(${reporte.id})">Asignar Equipo</button>
+                            <button class="btn btn-sm btn-danger" onclick="eliminarReporte(${reporte.id})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            listaReportes.innerHTML = html;
+        }
+
+        function getBadgeClass(prioridad) {
+            switch (prioridad) {
+                case 'Crítico':
+                    return 'bg-danger';
+                case 'Alto':
+                    return 'bg-warning';
+                case 'Medio':
+                    return 'bg-info';
+                case 'Bajo':
+                    return 'bg-success';
+                case 'Resuelto':
+                    return 'bg-success';
+                default:
+                    return 'bg-secondary';
+            }
+        }
+
+        function verDetalles(id) {
+            const reportes = JSON.parse(localStorage.getItem('reportes_aqua_alert')) || [];
+            const reporte = reportes.find(r => r.id == id);
+            if (reporte) {
+                alert(`📋 DETALLES DEL REPORTE #${id}\n\n` +
+                    `👤 Nombre: ${reporte.nombre}\n` +
+                    `🆔 Identificación: ${reporte.identificacion}\n` +
+                    `📧 Email: ${reporte.email}\n` +
+                    `📍 Ubicación: ${reporte.ubicacion}\n` +
+                    `📅 Fecha: ${reporte.fecha} ${reporte.hora}\n` +
+                    `📝 Descripción: ${reporte.descripcion}\n` +
+                    `🔄 Estado: ${reporte.estado}`);
+            }
+        }
+
+        function marcarAtendido(id) {
+            if (confirm('¿Confirmar que este reporte ha sido atendido?')) {
+                const reportes = JSON.parse(localStorage.getItem('reportes_aqua_alert')) || [];
+                const reporteIndex = reportes.findIndex(r => r.id == id);
+
+                if (reporteIndex !== -1) {
+                    reportes[reporteIndex].estado = 'Resuelto';
+                    reportes[reporteIndex].prioridad = 'Resuelto';
+                    localStorage.setItem('reportes_aqua_alert', JSON.stringify(reportes));
+                    cargarReportes(); // Recargar la lista
+                    alert('✅ Reporte marcado como atendido');
+                }
+            }
+        }
+
+        function asignarEquipo(id) {
+            const equipo = prompt('Asignar equipo de respuesta:\n\n1. Equipo de Rescate A\n2. Equipo de Rescate B\n3. Bomberos\n4. Policía\n\nIngrese el número de opción:');
+
+            const equipos = {
+                '1': 'Equipo de Rescate A',
+                '2': 'Equipo de Rescate B',
+                '3': 'Bomberos',
+                '4': 'Policía'
+            };
+
+            if (equipos[equipo]) {
+                alert(`👥 Equipo "${equipos[equipo]}" asignado al reporte #${id}`);
+            }
+        }
+
+        function eliminarReporte(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar este reporte?')) {
+                let reportes = JSON.parse(localStorage.getItem('reportes_aqua_alert')) || [];
+                reportes = reportes.filter(r => r.id != id);
+                localStorage.setItem('reportes_aqua_alert', JSON.stringify(reportes));
+                cargarReportes(); // Recargar la lista
+                alert('🗑️ Reporte eliminado exitosamente');
+            }
+        }
+
+        function limpiarReportes() {
+            if (confirm('⚠️ ¿Estás seguro de que deseas eliminar TODOS los reportes?\n\nEsta acción no se puede deshacer.')) {
+                localStorage.removeItem('reportes_aqua_alert');
+                cargarReportes();
+                alert('🗑️ Todos los reportes han sido eliminados');
+            }
+        }
+
+        function filtrarReportes(termino) {
+            const reportes = document.querySelectorAll('.report-card');
+            termino = termino.toLowerCase();
+
+            reportes.forEach(reporte => {
+                const texto = reporte.textContent.toLowerCase();
+                if (texto.includes(termino)) {
+                    reporte.style.display = 'block';
+                } else {
+                    reporte.style.display = 'none';
+                }
+            });
+        }
+
+        function filtrarZonas(termino) {
+            const zonas = document.querySelectorAll('.zone-card');
+            termino = termino.toLowerCase();
+
+            zonas.forEach(zona => {
+                const texto = zona.textContent.toLowerCase();
+                if (texto.includes(termino)) {
+                    zona.style.display = 'block';
+                } else {
+                    zona.style.display = 'none';
+                }
+            });
+        }
+
+        function registrarAlerta(event) {
+            event.preventDefault();
+
+            // Simular registro de alerta
+            const formData = new FormData(event.target);
+
+            // Mostrar mensaje de éxito
+            alert('✅ Alerta registrada exitosamente!\n\nLa alerta ha sido enviada al sistema y se notificará a los equipos de respuesta correspondientes.');
+
+            // Limpiar formulario
+            event.target.reset();
+        }
+
+        function mostrarFormularioZona() {
+            alert('🗺️ Funcionalidad en desarrollo\n\nEsta función permitirá agregar nuevas zonas de riesgo al sistema con coordenadas GPS y características específicas.');
+        }
+
+        // Funciones adicionales para los botones de acción
+        document.addEventListener('DOMContentLoaded', function() {
+            // Agregar event listeners a los botones de zonas
+            document.querySelectorAll('.zone-card button').forEach(btn => {
+                if (btn.textContent.includes('Ver Mapa')) {
+                    btn.addEventListener('click', function() {
+                        alert('🗺️ Ver Mapa\n\nAquí se abriría un mapa interactivo mostrando la ubicación exacta de la zona de riesgo.');
+                    });
+                } else if (btn.textContent.includes('Alertar')) {
+                    btn.addEventListener('click', function() {
+                        if (confirm('¿Enviar alerta a todos los residentes de esta zona?')) {
+                            alert('📱 Alerta Enviada\n\nSe ha enviado la alerta a todos los residentes registrados en esta zona de riesgo.');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Cargar reportes automáticamente cuando se carga la página
+        window.addEventListener('load', function() {
+            // Puedes descomentar esta línea si quieres cargar los reportes automáticamente
+            // cargarReportes();
+        });
+    </script>
+</body>
+
+</html>

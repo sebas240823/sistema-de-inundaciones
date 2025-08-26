@@ -1,176 +1,395 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema de Alerta de Inundaciones - Medellín</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #e6f7ff;
-      color: #003366;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #005580;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    nav {
-      background-color: #003366;
-      padding: 10px;
-      text-align: center;
-    }
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    main {
-      padding: 20px;
-    }
-    section {
-      margin-bottom: 40px;
-    }
-    .alerta {
-      background-color: #ffcccc;
-      border: 2px solid red;
-      padding: 15px;
-    }
-
-    /* Carrusel */
-    .carousel-container {
-      position: relative;
-      max-width: 600px;
-      margin: auto;
-    }
-    .carousel-slide {
-      display: none;
-    }
-    .carousel-slide img {
-      width: 100%;
-      border-radius: 5px;
-    }
-    .prev, .next {
-      cursor: pointer;
-      position: absolute;
-      top: 50%;
-      width: auto;
-      padding: 16px;
-      color: white;
-      font-weight: bold;
-      font-size: 20px;
-      transition: 0.3s ease;
-      border-radius: 0 3px 3px 0;
-      user-select: none;
-    }
-    .next {
-      right: 0;
-      border-radius: 3px 0 0 3px;
-    }
-    .prev:hover, .next:hover {
-      background-color: rgba(0,0,0,0.8);
-    }
-
-    /* Formularios y Servicios */
-    .formulario, .servicios {
-      background-color: white;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    input[type="submit"] {
-      background-color: #005580;
-      color: white;
-      cursor: pointer;
-      border: none;
-    }
-    input[type="submit"]:hover {
-      background-color: #003366;
-    }
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
-    ul li {
-      margin-bottom: 15px;
-    }
-    footer {
-      text-align: center;
-      background-color: #005580;
-      color: white;
-      padding: 10px;
-      margin-top: 20px;
-    }
-  </style>
+    <link rel="icon" href="imagenes/ChatGPT Image 15 jul 2025, 02_12_06 p.m..png" type="image/" />
+    <!-- También puede ser PNG -->
+    <link rel="icon" href="imagenes/ChatGPT Image 15 jul 2025, 02_12_06 p.m..png" type="image/png" />
 </head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Aqua Alert - Medellín</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6f7ff;
+            color: #003366;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background-color: #005580;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        nav {
+            background-color: #003366;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        main {
+            padding: 20px;
+        }
+        
+        section {
+            margin-bottom: 40px;
+        }
+        
+        .alerta {
+            background-color: #ffcccc;
+            border: 2px solid red;
+            padding: 15px;
+            text-align: center;
+        }
+        /* Carrusel */
+        
+        .carousel-container {
+            position: relative;
+            max-width: 600px;
+            margin: auto;
+        }
+        
+        .carousel-slide {
+            display: none;
+        }
+        
+        .carousel-slide img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.3s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+        
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        /* Formularios y Servicios */
+        
+        .formulario,
+        .servicios {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        input[type="submit"] {
+            background-color: #005580;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #003366;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        ul li {
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            text-align: center;
+            background-color: #005580;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
 <body>
 
-<header>
-  <h1>Sistema de Alerta de Inundaciones</h1>
-  <h2>Medellín, Colombia</h2>
-</header>
+    <header>
+        <h1>Sistema de Alerta de Inundaciones</h1>
+        <h2>Medellín, Colombia</h2>
+    </header>
 
-<nav>
-  <a href="#alertas">Alertas</a>
-  <a href="#imagenes">Imágenes</a>
-  <a href="#formulario">Reportar</a>
-  <a href="#servicios">Ayuda</a>
-  <a href="https://siata.gov.co/siata_nuevo/" target="_blank">SIATA</a>
-</nav>
+    <head>
+        <style>
+            .nav-content {
+                display: none;
+            }
+        </style>
+        <script>
+            function toggleContent(id) {
+                // Oculta todos los contenidos primero
+                var contents = document.getElementsByClassName('nav-content');
+                for (var i = 0; i < contents.length; i++) {
+                    contents[i].style.display = 'none';
+                }
+                // Muestra el contenido seleccionado
+                var selected = document.getElementById(id);
+                selected.style.display = 'block';
+            }
+        </script>
+    </head>
+    <nav>
 
-<main>
+        <body>
+            <a href="javascript:void(0)" onclick="toggleContent('mision')">Misión</a>
+            <a href="javascript:void(0)" onclick="toggleContent('vision')">Visión</a>
+            <a href="javascript:void(0)" onclick="toggleContent('valores')">Valores corporativos</a>
 
-  <section id="alertas" class="alerta">
-    <h3>⚠️ Alerta Activa</h3>
-    <p>Barrios en riesgo: La Iguaná, Bello Oriente, Manrique Central, San Javier, Belén Rincón.</p>
-    <p>Fuente: <a href="https://siata.gov.co/siata_nuevo/" target="_blank">SIATA Medellín</a></p>
-  </section>
 
-  <section id="imagenes">
-    <h3>📷 Inundaciones Recientes</h3>
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="..." class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
-    </div>
-  </div>
-</div>
+            <div id="mision" class="nav-content">
+                <p style="color: white;">Nuestra misión es proveer alertas tempranas de inundación para proteger vidas y bienes en Medellín, mediante monitoreo constante y tecnología accesible.</p>
+            </div>
 
-  <section id="formulario" class="formulario">
-    <h3>📝 Reportar Inundación</h3>
-    <form action="#" method="POST">
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" required>
+            <div id="vision" class="nav-content">
+                <p style="color: white;">Ser el sistema de alerta ciudadana más confiable de Colombia, impulsando comunidades resilientes y conscientes del riesgo hídrico.</p>
+            </div>
 
-      <label for="email">Correo electrónico:</label>
-      <input type="email" id="email" name="email" required>
+            <div id="valores" class="nav-content">
+                <p style="color: white;">Compromiso social, Innovacion, Responsabilidad ambiental, Transparencia, Colaboracion</p>
+            </div>
 
-      <label for="ubicacion">Ubicación del incidente:</label>
-      <input type="text" id="ubicacion" name="ubicacion" required>
+    </nav>
+    </body>
 
-      <label for="descripcion">Descripción:</label>
-      <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
 
-      <input type="submit" value="Enviar Reporte">
-    </form>
-  </section>
 
-  <section id="servicios" class="ser
+    <div>
+
+        <section id="alertas" class="alerta">
+            <h3>⚠️ Alerta Activa </h3>
+            <p>Barrios en riesgo: La Iguaná, Bello Oriente, Manrique Central, San Javier, Belén Rincón.</p>
+            <p>Fuente: <a href="https://siata.gov.co/siata_nuevo/" target="_blank">SIATA Medellín</a></p>
+        </section>
+
+
+        <div class="d-flex justify-content-center">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner  d-flex justify-content-around">
+                    <div class="carousel-item active">
+                        <img src="imagenes/1Altavista.webp" class="d-block w-50" alt="rio">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="imagenes/imagen 2" class="d-block w-50" alt="otro">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="imagenes/TP44RAX3HRE5HE6RS5A7ZYGZOM.jpeg" class="d-block w-50" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+            </div>
+        </div>
+
+
+        <section id="formulario" class="formulario">
+            <h3 class="text-center mb-4">📝 Reportar Inundación</h3>
+            <form id="formularioReporte" class="needs-validation" novalidate>
+
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">👤 Nombre completo:</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    <div class="invalid-feedback">⚠️ Por favor, completa el nombre.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Identificacion" class="form-label">🆔 Número de Identificación:</label>
+                    <input type="text" class="form-control" id="Identificacion" name="Identificacion" required>
+                    <div class="invalid-feedback">⚠️ Por favor, ingresa tu identificación.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">📧 Correo electrónico:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                    <div class="invalid-feedback">⚠️ Ingresa un correo electrónico válido.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="ubicacion" class="form-label">📍 Ubicación del incidente:</label>
+                    <input type="text" class="form-control" id="ubicacion" name="ubicacion" required>
+                    <div class="invalid-feedback">⚠️ Por favor, indica la ubicación.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label">📝 Descripción del suceso:</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required></textarea>
+                    <div class="invalid-feedback">⚠️ Describe brevemente lo sucedido.</div>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">📤 Enviar Reporte</button>
+                </div>
+            </form>
+        </section>
+
+
+
+        <nav>
+            <a href="https://wa.me/573001234567?text=¡Hola!%20Tengo%20una%20consulta." target="_blank" id="whatsapp-button">
+                <img src="imagenes/icons8-whatsapp-48.png" alt="Chat en WhatsApp" />
+            </a>
+            <a href="https://www.facebook.com/?locale=es_LA" target="_blank">
+                <img src="imagenes/icons8-facebook-logo-48.png" alt="Síguenos en Facebook" width="50" height="50">
+            </a>
+            <a href="https://x.com/?lang=es" target="_blank">
+                <img src="imagenes/icons8-x-50 (1).png" alt="Síguenos en X" width="50" height="50">
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" id="instagram-button">
+                <img src="imagenes/icons8-instagram-48.png" alt="Síguenos en Instagram">
+            </a>
+            <a href="mailto:tu_correo@gmail.com" target="_blank" id="gmail-button">
+                <img src="imagenes/icons8-gmail-48.png" alt="Contáctanos">
+            </a>
+            <a href="admin.html" target="_blank" id="admin-button">
+                <img src="imagenes/icons8-admin-settings-male-24.png" alt="Administrador" title="Panel de Administración" width="50" height="50">
+            </a>
+        </nav>
+
+
+        <section class="bg-light p-4 rounded shadow-sm my-4">
+            <h2 class="text-center text-primary mb-3">📍 Oficinas y Sucursales</h2>
+
+            <div class="row justify-content-center text-center">
+                <div class="col-md-5 mb-3">
+                    <div class="border p-3 rounded bg-white">
+                        <h5 style="color: #005580;">🏢 Oficina Principal</h5>
+                        <p class="mb-0">Calle 32 # 75-50</p>
+                    </div>
+                </div>
+                <div class="col-md-5 mb-3">
+                    <div class="border p-3 rounded bg-white">
+                        <h5 style="color: #005580;">🏬 Sucursal Norte</h5>
+                        <p class="mb-0">Carrera 71 # 92-21</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section id="servicios" class="ser"></section>
+        </main>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <script>
+            function toggleContent(id) {
+                const ids = ['mision', 'vision', 'valores'];
+                ids.forEach(function(sectionId) {
+                    const section = document.getElementById(sectionId);
+                    if (sectionId === id) {
+                        section.style.display = section.style.display === 'block' ? 'none' : 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            }
+
+            // NUEVA FUNCIONALIDAD: Envío de reportes al panel de administración
+            (function() {
+                const form = document.getElementById('formularioReporte');
+
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    // Si el formulario es válido
+                    if (form.checkValidity()) {
+                        // Recopilar datos del formulario
+                        const formData = new FormData(form);
+
+                        // Crear objeto del reporte
+                        const nuevoReporte = {
+                            id: Date.now(), // ID único
+                            nombre: formData.get('nombre'),
+                            identificacion: formData.get('Identificacion'),
+                            email: formData.get('email'),
+                            ubicacion: formData.get('ubicacion'),
+                            descripcion: formData.get('descripcion'),
+                            fecha: new Date().toLocaleDateString('es-CO'),
+                            hora: new Date().toLocaleTimeString('es-CO', {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            }),
+                            estado: 'Pendiente',
+                            prioridad: 'Medio'
+                        };
+
+                        // Obtener reportes existentes del localStorage
+                        let reportes = JSON.parse(localStorage.getItem('reportes_aqua_alert')) || [];
+
+                        // Agregar el nuevo reporte
+                        reportes.push(nuevoReporte);
+
+                        // Guardar en localStorage
+                        localStorage.setItem('reportes_aqua_alert', JSON.stringify(reportes));
+
+                        // Mostrar mensaje de éxito
+                        alert('✅ ¡Reporte enviado exitosamente!\n\nTu reporte ha sido recibido y será procesado por nuestro equipo de emergencias.\n\nNúmero de reporte: ' + nuevoReporte.id);
+
+                        // Limpiar el formulario
+                        form.reset();
+                        form.classList.remove('was-validated');
+                    }
+
+                    // Activa mensajes de Bootstrap
+                    form.classList.add('was-validated');
+                }, false);
+            })();
+        </script>
+
+
+</body>
+
+<h6 style="text-align: center;"> AQUA ALERT</h6>
+
+
+</html>
