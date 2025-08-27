@@ -325,10 +325,23 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Protección de acceso - mantener funcionalidad original
-        // if (sessionStorage.getItem("admin_logueado") !== "true") {
-        //     window.location.href = "admin-login.html";
-        // }
+        // Protección de acceso activa
+        if (sessionStorage.getItem("admin_logueado") !== "true") {
+            window.location.href = "admin-login.html";
+        }
+
+        // También prevenir acceso si el usuario usa el botón de retroceso (carga desde caché)
+        window.addEventListener('pageshow', function(event) {
+            const entries = performance.getEntriesByType("navigation");
+            const navType = entries.length > 0 ? entries[0].type : null;
+
+            if (event.persisted || navType === "back_forward") {
+                if (sessionStorage.getItem("admin_logueado") !== "true") {
+                    window.location.href = "admin-login.html";
+                }
+            }
+        });
+
 
         function mostrarSeccion(seccion) {
             // Ocultar panel principal
