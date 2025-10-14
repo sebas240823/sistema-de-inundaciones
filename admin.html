@@ -325,10 +325,10 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Protección de acceso - mantener funcionalidad original
-        // if (sessionStorage.getItem("admin_logueado") !== "true") {
-        //     window.location.href = "admin-login.html";
-        // }
+        // Protección de acceso
+        if (sessionStorage.getItem("admin_logueado") !== "true") {
+            window.location.href = "admin-login.html";
+        }
 
         function mostrarSeccion(seccion) {
             // Ocultar panel principal
@@ -348,12 +348,23 @@
         }
 
         function volverAlMenu() {
-            // Mostrar panel principal
+            // CAMBIO PRINCIPAL: Mostrar panel principal
             document.getElementById('main-panel').style.display = 'block';
 
             // Ocultar todas las secciones
             const secciones = document.querySelectorAll('.content-section');
             secciones.forEach(s => s.classList.remove('active'));
+
+            // Limpiar campos de búsqueda
+            const camposBusqueda = document.querySelectorAll('input[type="text"][placeholder*="Buscar"]');
+            camposBusqueda.forEach(campo => campo.value = '');
+
+            // Restaurar visibilidad de elementos
+            const reportes = document.querySelectorAll('.report-card');
+            reportes.forEach(reporte => reporte.style.display = 'block');
+
+            const zonas = document.querySelectorAll('.zone-card');
+            zonas.forEach(zona => zona.style.display = 'block');
         }
 
         function cerrarSesion() {
@@ -438,7 +449,7 @@
                     `📧 Email: ${reporte.email}\n` +
                     `📍 Ubicación: ${reporte.ubicacion}\n` +
                     `📅 Fecha: ${reporte.fecha} ${reporte.hora}\n` +
-                    `📝 Descripción: ${reporte.descripcion}\n` +
+                    `📝 Descripción: ${reporte.descripción}\n` +
                     `🔄 Estado: ${reporte.estado}`);
             }
         }
@@ -538,6 +549,9 @@
 
         // Funciones adicionales para los botones de acción
         document.addEventListener('DOMContentLoaded', function() {
+            // CAMBIO IMPORTANTE: Asegurar que SIEMPRE se muestre el menú principal al cargar
+            volverAlMenu();
+
             // Agregar event listeners a los botones de zonas
             document.querySelectorAll('.zone-card button').forEach(btn => {
                 if (btn.textContent.includes('Ver Mapa')) {
@@ -554,12 +568,9 @@
             });
         });
 
-        // Cargar reportes automáticamente cuando se carga la página
-        window.addEventListener('load', function() {
-            // Puedes descomentar esta línea si quieres cargar los reportes automáticamente
-            // cargarReportes();
+        // CAMBIO IMPORTANTE: Manejar navegación del navegador
+        window.addEventListener('popstate', function(event) {
+            volverAlMenu();
         });
-    </script>
-</body>
 
-</html>
+        // CAMBIO IMPORTANTE: Limpiar estado al cerrar/

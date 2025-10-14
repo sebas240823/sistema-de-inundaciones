@@ -3,11 +3,7 @@
 
 <head>
     <link rel="icon" href="imagenes/ChatGPT Image 15 jul 2025, 02_12_06 p.m..png" type="image/x-icon" />
-    <!-- También puede ser PNG -->
     <link rel="icon" href="imagenes/ChatGPT Image 15 jul 2025, 02_12_06 p.m..png" type="image/png" />
-</head>
-
-<head>
     <meta charset="UTF-8">
     <title>Login Administrador - Aqua Alert</title>
     <style>
@@ -66,7 +62,6 @@
 </head>
 
 <body>
-
     <div class="login-box">
         <h2>Administrador - Aqua Alert</h2>
         <input type="email" id="usuario" placeholder="Correo electrónico">
@@ -83,21 +78,20 @@
             const passCorrecto = "sebas279";
             const userCorrectoA = "joserdejesusramirez@gmail.com";
             const passCorrectoD = "joser12";
-            if (usuario === userCorrecto && contrasena === passCorrecto) {
+
+            if ((usuario === userCorrecto && contrasena === passCorrecto) ||
+                (usuario === userCorrectoA && contrasena === passCorrectoD)) {
                 sessionStorage.setItem("admin_logueado", "true");
-                window.location.href = "admin.html";
-            } else {
-                document.getElementById("error").style.display = "block";
-            }
-            if (usuario === userCorrectoA && contrasena === passCorrectoD) {
-                sessionStorage.setItem("admin_logueado", "true");
+                // CAMBIO IMPORTANTE: Limpiar cualquier estado previo antes de redirigir
+                sessionStorage.removeItem("seccion_activa");
                 window.location.href = "admin.html";
             } else {
                 document.getElementById("error").style.display = "block";
             }
         }
     </script>
-
 </body>
+
+</html>
 
 </html>
