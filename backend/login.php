@@ -1,58 +1,34 @@
+login.php
 <?php
-// Configurar encabezados CORS
 header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *"); // Cambiar a dominio específico en producción
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Origin: *"); // Para pruebas con frontend en otra carpeta
+header("Access-Control-Allow-Methods: POST,GET,OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-// Manejar preflight (CORS pre-request)
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+include "db.php";
+if ($_SERVER['REQUEST_METHOD']=== 'OPTIONS') {
     http_response_code(200);
     exit();
 }
 
-// Incluir archivo de conexión a la base de datos
-include "db.php";
-
-// Leer cuerpo del POST
+// Leer datos del POST
 $data = json_decode(file_get_contents("php://input"));
+$username = $data->username;
+$password = md5($data->password); // Encriptado simple con MD5 (puedes mejorar con password_hash)
 
-// Verificar si se enviaron los campos necesarios
-if (!isset($data->username) || !isset($data->password)) {
-    echo json_encode([
-        "success" => false,
-        "message" => "Faltan datos: username o password"
-    ]);
-    http_response_code(400); // Bad Request
-    exit();
-}
-
-$nombre = $data->username;
-$contrasena = md5($data->password); // Usa MD5 solo si tu base de datos ya lo tiene así
-
-// Consulta con prepared statement para prevenir SQL Injection
-$sql = "SELECT * FROM user WHERE username=? AND password=?";
+$sql = "SELECT * FROM usuarios WHERE username=? AND password=?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ss", $nombre, $contrasena);
+$stmt->bind_param("ss", $username, $password);
 $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    $user = $result-> fetch_assoc();
-    echo json_encode([
-        "success" => true,
-        "message" => "Login correcto",
-        "rol" => $user["is_admind"],
-        "id" => $user['id'],
-        "info" => $user
-    ]);
+    echo json_encode(["success" => true, "message" => "Login correcto"]);
 } else {
-    echo json_encode([
-        "success" => false,
-        "message" => "Usuario o contraseña incorrectos"
-    ]);
+    echo json_encode(["success" => false, "message" => "Usuario o contraseña incorrectos"]);
 }
 
-$stmt->close();
-$conn->close();
+    $stmt->close();
+    $conn->close();
+
 ?>
