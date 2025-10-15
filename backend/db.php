@@ -3,7 +3,7 @@
 $host = "127.0.0.1";
 $user = "root";
 $pass = "";
-$dbname = "prueba";
+$dbname = "sistema_inundaciones";
 
 // Crear conexión
 $conn = new mysqli($host, $user, $pass, $dbname, 3306);
